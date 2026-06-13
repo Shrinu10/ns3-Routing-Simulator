@@ -179,7 +179,7 @@ Install:
 
 ---
 
-## Docker Support
+# Docker Support
 
 The simulator can be built and executed inside Docker without installing NS-3, GCC, CMake, Python, or any other dependencies locally.
 
