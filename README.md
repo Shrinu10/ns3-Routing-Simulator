@@ -1,181 +1,75 @@
 # NS-3 Routing Simulator
 
-A configurable network routing simulator implemented using **NS-3.48** to study routing behavior across different network topologies and evaluate network performance metrics such as packet delivery ratio, throughput, and end-to-end delay.
+A configurable network routing simulator built using **NS-3.48** for studying routing behavior, packet forwarding, and network performance across multiple network topologies.
+
+This project is a port of a custom C++ routing simulator into the NS-3 ecosystem, enabling realistic packet-level simulation, performance analysis using FlowMonitor, and visualization through NetAnim.
 
 ---
 
-## Features
+# Features
 
 * Multiple network topologies
 
   * Random Connected Graph
-  * Ring
+  * Ring Network
   * Full Mesh
   * Binary Tree
 
 * Configurable network size
 
-  * Tested with 20–500 routers
+  * Tested from **20 to 500 routers**
 
 * UDP-based packet transmission
 
 * IPv4 routing using NS-3 Global Routing
 
-* FlowMonitor integration for performance analysis
+* FlowMonitor integration
 
-* NetAnim support for packet visualization
+* NetAnim visualization support
 
-* Scalable and modular simulation design
+* Command-line configurable simulation parameters
 
----
-
-## Project Overview
-
-This project ports a custom routing simulator into the NS-3 simulation framework.
-
-The simulator creates configurable network topologies, installs network stacks on routers, generates packet traffic between nodes, and measures network performance using NS-3's built-in monitoring tools.
-
-The objective is to provide a realistic packet-level simulation environment for analyzing routing behavior under different network structures.
+* Docker support for reproducible builds
 
 ---
 
-## Supported Topologies
+# Technologies Used
 
-| Topology | Description                                  |
-| -------- | -------------------------------------------- |
-| Random   | Connected graph with additional random links |
-| Ring     | Circular chain of routers                    |
-| Mesh     | Every router connected to every router       |
-| Tree     | Binary hierarchical topology                 |
-
----
-
-## Simulation Components
-
-### Network Layer
-
-* Point-to-Point Channels
-* Internet Stack
-* IPv4 Address Assignment
-* Global Routing Tables
-
-### Traffic Layer
-
-* UDP Echo Server
-* UDP Echo Client
-
-### Analysis Layer
-
-* FlowMonitor
-* NetAnim Visualization
+| Component            | Technology  |
+| -------------------- | ----------- |
+| Simulation Framework | NS-3.48     |
+| Programming Language | C++17       |
+| Build System         | CMake       |
+| Visualization        | NetAnim     |
+| Performance Analysis | FlowMonitor |
+| Containerization     | Docker      |
 
 ---
 
-## Performance Metrics
+# Supported Topologies
+
+| Topology | Description                  |
+| -------- | ---------------------------- |
+| Random   | Random connected graph       |
+| Ring     | Circular chain of routers    |
+| Mesh     | Fully connected network      |
+| Tree     | Binary hierarchical topology |
+
+---
+
+# Simulation Metrics
 
 The simulator measures:
 
-| Metric                | Description                    |
-| --------------------- | ------------------------------ |
-| Packet Delivery Ratio | Successfully delivered packets |
-| End-to-End Delay      | Average packet delay           |
-| Throughput            | Data transfer rate             |
-| Packet Loss           | Lost packets                   |
-| Flow Statistics       | Per-flow analysis              |
+* Packet Delivery Ratio (PDR)
+* Average End-to-End Delay
+* Throughput
+* Packet Loss
+* Flow Statistics
 
 ---
 
-## Experimental Results
-
-Initial testing was performed on all supported topologies.
-
-| Parameter             | Value               |
-| --------------------- | ------------------- |
-| Router Range          | 20 – 500            |
-| Packet Delivery Ratio | 100%                |
-| Routing Method        | NS-3 Global Routing |
-| Transport Protocol    | UDP                 |
-
-The simulator successfully delivered packets across all tested topologies while collecting detailed performance statistics.
-
----
-
-## Requirements
-
-| Software | Version |
-| -------- | ------- |
-| NS-3     | 3.48    |
-| C++      | C++17   |
-| Python   | 3.x     |
-| CMake    | 3.16+   |
-
----
-
-## Build
-
-### Configure
-
-```bash
-./ns3 configure --enable-examples
-```
-
-### Build
-
-```bash
-./ns3 build
-```
-
-### Run
-
-```bash
-./ns3 run routing-sim
-```
-
----
-
-## Example Usage
-
-### Random Topology
-
-```bash
-./ns3 run "routing-sim --routers=100 --topology=random"
-```
-
-### Ring Topology
-
-```bash
-./ns3 run "routing-sim --routers=50 --topology=ring"
-```
-
-### Mesh Topology
-
-```bash
-./ns3 run "routing-sim --routers=20 --topology=mesh"
-```
-
-### Tree Topology
-
-```bash
-./ns3 run "routing-sim --routers=31 --topology=tree"
-```
-
----
-
-## Output
-
-The simulation generates:
-
-```text
-animation.xml
-```
-
-which can be opened using **NetAnim** for visualization.
-
-FlowMonitor statistics are displayed in the terminal after simulation completion.
-
----
-
-## Repository Structure
+# Repository Structure
 
 ```text
 ns3-Routing-Simulator/
@@ -183,36 +77,192 @@ ns3-Routing-Simulator/
 ├── src/
 │   └── routing-sim.cc
 │
-├── screenshots/
+├── docker/
+│   └── Dockerfile
 │
-├── docs/
+├── screenshots/
 │
 └── README.md
 ```
 
 ---
 
-## Screenshots
+# Prerequisites
 
-Add screenshots of:
+Install:
 
-* Random topology
-* Ring topology
-* Mesh topology
-* Tree topology
-* NetAnim visualization
-* Terminal output
-
-inside the `screenshots/` directory.
+* NS-3.48
+* CMake
+* GCC/G++
+* Python 3.x
 
 ---
 
-## Future Work
+# Build Instructions
 
-* Additional routing algorithms
-* Dynamic topology changes
-* Link failure simulation
-* Large-scale benchmarking
-* Docker-based deployment
+## Configure
 
+```bash
+./ns3 configure --enable-examples
+```
 
+## Build
+
+```bash
+./ns3 build
+```
+
+## Run
+
+```bash
+./ns3 run routing-sim
+```
+
+---
+
+# Command Line Parameters
+
+| Parameter     | Description                 | Default     |
+| ------------- | --------------------------- | ----------- |
+| --routers     | Number of routers           | 20          |
+| --topology    | random / ring / mesh / tree | random      |
+| --packets     | Number of packets           | 100         |
+| --packetSize  | Packet size (bytes)         | 512         |
+| --source      | Source router ID            | 0           |
+| --destination | Destination router ID       | Last Router |
+| --dataRate    | Link bandwidth              | 10Mbps      |
+| --linkDelay   | Link delay                  | 5ms         |
+| --randomDelay | Enable random delay         | false       |
+| --delayMin    | Minimum delay               | 1ms         |
+| --delayMax    | Maximum delay               | 10ms        |
+| --seed        | Random seed                 | 42          |
+
+---
+
+# Example Commands
+
+## Random Topology
+
+```bash
+./ns3 run "routing-sim --routers=100 --topology=random"
+```
+
+## Ring Topology
+
+```bash
+./ns3 run "routing-sim --routers=50 --topology=ring"
+```
+
+## Mesh Topology
+
+```bash
+./ns3 run "routing-sim --routers=20 --topology=mesh"
+```
+
+## Tree Topology
+
+```bash
+./ns3 run "routing-sim --routers=31 --topology=tree"
+```
+
+## Custom Packet Count
+
+```bash
+./ns3 run "routing-sim --routers=100 --packets=500"
+```
+
+## Random Link Delays
+
+```bash
+./ns3 run "routing-sim --routers=50 --randomDelay=true --delayMin=1 --delayMax=10"
+```
+
+---
+
+# Docker Support
+
+The simulator can be built and executed inside Docker without installing NS-3 dependencies locally.
+
+## Build Docker Image
+
+```bash
+docker build -t ns3-routing-simulator .
+```
+
+## Run Simulation
+
+```bash
+docker run --rm ns3-routing-simulator
+```
+
+## Run with Custom Arguments
+
+```bash
+docker run --rm ns3-routing-simulator \
+routing-sim --routers=100 --topology=random
+```
+
+---
+
+# NetAnim Visualization
+
+The simulation automatically generates:
+
+```text
+animation.xml
+```
+
+after execution.
+
+## Launch NetAnim
+
+```bash
+netanim
+```
+
+or
+
+```bash
+~/netanim/build/netanim
+```
+
+## Visualizing Results
+
+1. Open NetAnim
+2. Click **File → Open**
+3. Select `animation.xml`
+4. Press **Play**
+5. Observe packet movement through the network
+
+---
+
+# Experimental Results
+
+Initial experiments were conducted across all supported topologies.
+
+| Topology | Routers | Packet Delivery Ratio |
+| -------- | ------- | --------------------- |
+| Random   | 20      | 100%                  |
+| Ring     | 10      | 100%                  |
+| Tree     | 15      | 100%                  |
+| Mesh     | 8       | 100%                  |
+
+Key observations:
+
+* Mesh topology achieves the lowest delay.
+* Tree topology introduces higher path lengths.
+* Ring topology provides deterministic routing.
+* Random topology balances connectivity and scalability.
+* All tested configurations achieved 100% packet delivery.
+
+---
+
+# Future Work
+
+Potential extensions include:
+
+* Privacy-preserving routing
+* Secret-sharing based routing protocols
+* Distributed routing algorithms
+* Multi-path routing
+* Secure forwarding mechanisms
