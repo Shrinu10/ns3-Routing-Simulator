@@ -179,29 +179,55 @@ Install:
 
 ---
 
-# Docker Support
+## Docker Support
 
-The simulator can be built and executed inside Docker without installing NS-3 dependencies locally.
+The simulator can be built and executed inside Docker without installing NS-3, GCC, CMake, Python, or any other dependencies locally.
 
-## Build Docker Image
+### Build Docker Image
 
 ```bash
 docker build -t ns3-routing-simulator .
 ```
 
-## Run Simulation
+### Run Default Simulation
 
 ```bash
 docker run --rm ns3-routing-simulator
 ```
 
-## Run with Custom Arguments
+### View Available Parameters
 
 ```bash
-docker run --rm ns3-routing-simulator \
-routing-sim --routers=100 --topology=random
+docker run --rm ns3-routing-simulator --help
 ```
 
+### Run with Custom Arguments
+
+```bash
+docker run --rm ns3-routing-simulator --routers=50 --topology=ring
+```
+
+### Larger Mesh Topology Example
+
+```bash
+docker run --rm ns3-routing-simulator ^
+--routers=50 ^
+--topology=mesh ^
+--packets=500 ^
+--packetSize=1024 ^
+--source=5 ^
+--destination=40 ^
+--randomDelay=true ^
+--delayMin=5 ^
+--delayMax=50
+```
+
+### Notes
+
+- The Docker image contains a complete NS-3 environment.
+- No local installation of NS-3 is required.
+- All command-line parameters are forwarded directly to the simulator.
+- Use `--help` to view all available simulation options.
 ---
 
 # NetAnim Visualization
