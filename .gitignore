@@ -67,3 +67,9 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+animation.xml
+flowmon.xml
+build/
+*.o
+*.log
