@@ -232,33 +232,27 @@ docker run --rm ns3-routing-simulator ^
 
 # NetAnim Visualization
 
-The simulation automatically generates:
+The simulator generates an `animation.xml` file that can be opened using NetAnim.
 
-```text
-animation.xml
-```
+### Install NetAnim
 
-after execution.
+Follow the official NS-3 documentation to install NetAnim on your system.
 
-## Launch NetAnim
+### Open Animation
 
 ```bash
 netanim
 ```
 
-or
+Then load:
 
-```bash
-~/netanim/build/netanim
+```text
+animation.xml
 ```
 
-## Visualizing Results
+### Note
 
-1. Open NetAnim
-2. Click **File → Open**
-3. Select `animation.xml`
-4. Press **Play**
-5. Observe packet movement through the network
+NetAnim is not included in the Docker image because it requires a graphical user interface (GUI). Docker is used only for simulation execution and XML generation.
 
 ---
 
